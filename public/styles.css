@@ -1,0 +1,33 @@
+body
+{
+  font-family: 'Oxygen', sans-serif;
+  color: #111111;
+}
+
+table
+{
+  width: 800px;
+}
+
+th, td
+{
+  padding: 7px 10px 5px 10px;
+  text-align: center;
+}
+      
+th 
+{
+  font-weight: 700;
+  font-size: 90%;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-bottom: 2px solid #111111;
+  border-top: 1px solid #999;
+}
+
+td
+{
+  font-weight: 400;
+  font-size: 90%;
+}
+

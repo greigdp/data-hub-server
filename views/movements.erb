@@ -1,0 +1,21 @@
+<table>
+  <tr>
+    <th>oid</th>
+    <th>timestamp</th>
+    <th>xaxis</th>
+    <th>yaxis</th>
+    <th>zaxis</th>
+    <th>created at</th>
+  </tr>
+  <% @movements.each do |movement| %>
+    <tr>
+      <td><%= movement.oid %></td>
+      <td><%= Time.at(movement.timestamp) %></td>
+      <td><%= movement.xaxis %></td>
+      <td><%= movement.yaxis %></td>
+      <td><%= movement.zaxis %></td>
+      <td><%= movement.created_at %></td>
+    </tr>
+  <% end %>
+</table>
+
