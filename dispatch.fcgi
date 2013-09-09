@@ -46,6 +46,17 @@ class Movement
   property :created_at, DateTime
 end
 
+class Temperature
+  include DataMapper::Resource
+
+  property :id, Serial
+  property :oid, Integer
+  property :timestamp, Integer
+  property :temp1, Integer
+  property :temp2, Integer
+  property :created_at, DateTime
+end
+
 DataMapper.finalize.auto_upgrade!
 
 class App < Sinatra::Application
@@ -81,6 +92,36 @@ class App < Sinatra::Application
       m.zaxis      = object["zaxis"]
       m.created_at = Time.now
       m.save
+    end
+    redirect '/'
+  end
+
+  get '/temperatures' do
+     @temperatures = Temperature.all :order => :id.desc
+     @title = 'Temperatures'
+     erb :temperatures
+  end
+
+  get '/temperatures/latest' do
+    if Temperature.last.nil?
+      @latest_temperature = 0
+    else
+      @latest_temperature = Temperature.last.id
+    end
+    erb :latest_temperature, :layout => false
+  end
+
+  post '/temperatures/input' do
+    temperature_data = JSON.parse(request.body.read)
+
+    temperature_data.each do |object|
+      t = Temperature.new
+      t.oid        = object["id"]
+      t.timestamp  = object["timestamp"]
+      t.temp1      = object["temp1"]
+      t.temp2      = object["temp2"]
+      t.created_at = Time.now
+      t.save
     end
     redirect '/'
   end

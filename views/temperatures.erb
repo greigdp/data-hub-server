@@ -1,0 +1,19 @@
+<table>
+  <tr>
+    <th>oid</th>
+    <th>timestamp</th>
+    <th>temp 1</th>
+    <th>temp 2</th>
+    <th>created at</th>
+  </tr>
+  <% @temperatures.each do |temperature| %>
+    <tr>
+      <td><%= temperature.oid %></td>
+      <td><%= Time.at(temperature.timestamp) %></td>
+      <td><%= temperature.temp1 %></td>
+      <td><%= temperature.temp2 %></td>
+      <td><%= temperature.created_at %></td>
+    </tr>
+  <% end %>
+</table>
+
