@@ -57,6 +57,19 @@ class Temperature
   property :created_at, DateTime
 end
 
+class Location
+  include DataMapper::Resource
+
+  property :id, Serial
+  property :oid, Integer
+  property :timestamp, Integer
+  property :provider, Text
+  property :latitude, Float
+  property :longitude, Float
+  property :accuracy, Float
+  property :created_at, DateTime
+end
+
 DataMapper.finalize.auto_upgrade!
 
 class App < Sinatra::Application
@@ -66,7 +79,7 @@ class App < Sinatra::Application
   end
 
   get '/movements' do
-     @movements = Movement.all :order => :id.desc
+     @movements = Movement.last(50)
      @title = 'Movements'
      erb :movements
   end
@@ -97,7 +110,7 @@ class App < Sinatra::Application
   end
 
   get '/temperatures' do
-     @temperatures = Temperature.all :order => :id.desc
+     @temperatures = Temperature.last(50)
      @title = 'Temperatures'
      erb :temperatures
   end
@@ -122,6 +135,38 @@ class App < Sinatra::Application
       t.temp2      = object["temp2"]
       t.created_at = Time.now
       t.save
+    end
+    redirect '/'
+  end
+
+  get '/locations' do
+     @locations = Location.last(50)
+     @title = 'Locations'
+     erb :locations
+  end
+
+  get '/locations/latest' do
+    if Location.last.nil?
+      @latest_location = 0
+    else
+      @latest_location = Location.last.id
+    end
+    erb :latest_location, :layout => false
+  end
+
+  post '/locations/input' do
+    location_data = JSON.parse(request.body.read)
+
+    location_data.each do |object|
+      l = Location.new
+      l.oid        = object["id"]
+      l.timestamp  = object["timestamp"]
+      l.provider   = object["provider"]
+      l.latitude   = object["latitude"]
+      l.longitude  = object["longitude"]
+      l.accuracy   = object["accuracy"]     
+      l.created_at = Time.now
+      l.save
     end
     redirect '/'
   end
