@@ -1,3 +1,20 @@
+<% # Helper methods
+
+# Ordinalise nubers for date string outputs.
+# See https://gist.github.com/alterisian/4154152 
+def ordinalise(day)
+  if (11..13).include?(day % 100)
+   return "#{day}th"
+  else
+    case self % 10
+      when 1; return "#{self}st"
+      when 2; return "#{self}nd"
+      when 3; return "#{self}rd"
+      else    return "#{self}th"
+    end
+  end
+end
+%>
 <table>
   <tr>
     <th>oid</th>
@@ -7,12 +24,14 @@
     <th>created at</th>
   </tr>
   <% @temperatures.each do |temperature| %>
+  <% gmt = Time.at(temperature.timestamp) + (60 * 60 * 6)%>
+  <% ca = Time.parse(temperature.created_at.to_s) + (60 * 60 * 7) %>
     <tr>
       <td><%= temperature.oid %></td>
-      <td><%= Time.at(temperature.timestamp) %></td>
+      <td><%= gmt.strftime("%l:%M:%S %P, #{ordinalise(gmt.day)} %B") %></td>
       <td><%= temperature.temp1 %></td>
       <td><%= temperature.temp2 %></td>
-      <td><%= temperature.created_at %></td>
+      <td><%= ca.strftime("%l:%M:%S %P, #{ordinalise(ca.day)} %B") %></td>
     </tr>
   <% end %>
 </table>

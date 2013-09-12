@@ -1,3 +1,20 @@
+<% # Helper methods
+
+# Ordinalise nubers for date string outputs.
+# See https://gist.github.com/alterisian/4154152
+def ordinalise(day)
+  if (11..13).include?(day % 100)
+   return "#{day}th"
+  else
+    case self % 10
+      when 1; return "#{self}st"
+      when 2; return "#{self}nd"
+      when 3; return "#{self}rd"
+      else    return "#{self}th"
+    end
+  end
+end
+%>
 <table>
   <tr>
     <th>oid</th>
@@ -9,14 +26,16 @@
     <th>created at</th>
   </tr>
   <% @locations.each do |location| %>
+    <% gmt = Time.at(location.timestamp) + (60 * 60 * 7) %>
+    <% ca = Time.parse(location.created_at.to_s) + (60 * 60 * 7) %>
     <tr>
       <td><%= location.oid %></td>
-      <td><%= Time.at(location.timestamp) %></td>
+      <td><%= gmt.strftime("%l:%M:%S %P, #{ordinalise(gmt.day)} %B") %></td>
       <td><%= location.provider %></td>
       <td><%= location.latitude %></td>
       <td><%= location.longitude %></td>
-      <td><%= location.longitude %>
-      <td><%= location.created_at %></td>
+      <td><%= location.accuracy %></td>
+      <td><%= ca.strftime("%l:%M:%S %P, #{ordinalise(ca.day)} %B") %></td>
     </tr>
   <% end %>
 </table>

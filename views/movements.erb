@@ -1,3 +1,21 @@
+<% # Helper methods
+
+# Ordinalise nubers for date string outputs.
+# See https://gist.github.com/alterisian/4154152
+def ordinalise(day)
+  if (11..13).include?(day % 100)
+   return "#{day}th"
+  else
+    case self % 10
+      when 1; return "#{self}st"
+      when 2; return "#{self}nd"
+      when 3; return "#{self}rd"
+      else    return "#{self}th"
+    end
+  end
+end
+%>
+
 <table>
   <tr>
     <th>oid</th>
@@ -8,13 +26,15 @@
     <th>created at</th>
   </tr>
   <% @movements.each do |movement| %>
+  <% gmt = Time.at(movement.timestamp) + (60 * 60 * 6)%>
+  <% ca = Time.parse(movement.created_at.to_s) + (60 * 60 * 7) # WTF?! I don't even...%>
     <tr>
       <td><%= movement.oid %></td>
-      <td><%= Time.at(movement.timestamp) %></td>
+      <td><%= gmt.strftime("%l:%M:%S %P, #{ordinalise(gmt.day)} %B") %></td>
       <td><%= movement.xaxis %></td>
       <td><%= movement.yaxis %></td>
       <td><%= movement.zaxis %></td>
-      <td><%= movement.created_at %></td>
+      <td><%= ca.strftime("%l:%M:%S %P, #{ordinalise(ca.day)} %B") %></td>
     </tr>
   <% end %>
 </table>
