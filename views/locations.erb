@@ -1,0 +1,23 @@
+<table>
+  <tr>
+    <th>oid</th>
+    <th>timestamp</th>
+    <th>provider</th>
+    <th>latitude</th>
+    <th>longitude</th>
+    <th>accuracy</th>
+    <th>created at</th>
+  </tr>
+  <% @locations.each do |location| %>
+    <tr>
+      <td><%= location.oid %></td>
+      <td><%= Time.at(location.timestamp) %></td>
+      <td><%= location.provider %></td>
+      <td><%= location.latitude %></td>
+      <td><%= location.longitude %></td>
+      <td><%= location.longitude %>
+      <td><%= location.created_at %></td>
+    </tr>
+  <% end %>
+</table>
+
