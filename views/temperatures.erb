@@ -29,8 +29,8 @@ end
     <tr>
       <td><%= temperature.oid %></td>
       <td><%= gmt.strftime("%l:%M:%S %P, #{ordinalise(gmt.day)} %B") %></td>
-      <td><%= temperature.temp1 %></td>
-      <td><%= temperature.temp2 %></td>
+      <td><%= "#{temperature.temp1 / 10}.#{temperature.temp1 % 10}" %>&deg C</td>
+      <td><%= "#{temperature.temp2 / 10}.#{temperature.temp2 % 10}" %>&deg C</td>
       <td><%= ca.strftime("%l:%M:%S %P, #{ordinalise(ca.day)} %B") %></td>
     </tr>
   <% end %>
