@@ -31,9 +31,9 @@ end
     <tr>
       <td><%= movement.oid %></td>
       <td><%= gmt.strftime("%l:%M:%S %P, #{ordinalise(gmt.day)} %B") %></td>
-      <td><%= movement.xaxis %></td>
-      <td><%= movement.yaxis %></td>
-      <td><%= movement.zaxis %></td>
+      <td><%= "#{(movement.xaxis - 512) * 0.0098} g" %></td>
+      <td><%= "#{(movement.yaxis - 512) * 0.0098} g" %></td>
+      <td><%= "#{(movement.zaxis - 512) * 0.0098} g" %></td>
       <td><%= ca.strftime("%l:%M:%S %P, #{ordinalise(ca.day)} %B") %></td>
     </tr>
   <% end %>
