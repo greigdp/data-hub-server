@@ -32,9 +32,9 @@ end
       <td><%= location.oid %></td>
       <td><%= gmt.strftime("%l:%M:%S %P, #{ordinalise(gmt.day)} %B") %></td>
       <td><%= location.provider %></td>
-      <td><%= location.latitude %></td>
-      <td><%= location.longitude %></td>
-      <td><%= location.accuracy %></td>
+      <td><%= location.latitude %>&deg N</td>
+      <td><%= location.longitude %>&deg E </td>
+      <td><%= location.accuracy %> m</td>
       <td><%= ca.strftime("%l:%M:%S %P, #{ordinalise(ca.day)} %B") %></td>
     </tr>
   <% end %>
