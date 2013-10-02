@@ -6,11 +6,11 @@ def ordinalise(day)
   if (11..13).include?(day % 100)
    return "#{day}th"
   else
-    case self % 10
-      when 1; return "#{self}st"
-      when 2; return "#{self}nd"
-      when 3; return "#{self}rd"
-      else    return "#{self}th"
+    case day % 10
+      when 1; return "#{day}st"
+      when 2; return "#{day}nd"
+      when 3; return "#{day}rd"
+      else    return "#{day}th"
     end
   end
 end
