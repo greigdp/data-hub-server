@@ -18,8 +18,6 @@ DataMapper.setup(  :default, {
                    :password => '',
                    :database => 'sederunt_NCPO' })
 
-# FIX;ME: User class goes here.
-
 class Movement
   include DataMapper::Resource
 
@@ -55,6 +53,29 @@ class Location
   property :accuracy, Float
   property :created_at, DateTime
 end
+
+class Checkout
+  include DataMapper::Resource
+
+  property :id , Serial
+  property :device_id, Text
+  property :patient_id, Text
+  property :token, Text
+  property :checkout_time, DateTime
+  property :checkin_time, DateTime
+end
+
+class CheckoutArchiveLog
+  include DataMapper::Resource
+
+  property :id , Serial
+  property :device_id, Text
+  property :patient_id, Text
+  property :token, Text
+  property :checkout_time, DateTime
+  property :checkin_time, DateTime
+end
+
 
 DataMapper.finalize.auto_upgrade!
 
